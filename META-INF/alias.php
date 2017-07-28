@@ -29,4 +29,10 @@ return [
     \ZanPHP\ConnectionPool\Pool::class => "Zan\\Framework\\Network\\Connection\\Pool",
     \ZanPHP\ConnectionPool\PoolEx::class => "Zan\\Framework\\Network\\Connection\\PoolEx",
     \ZanPHP\ConnectionPool\ReconnectionPloy::class => "Zan\\Framework\\Network\\Connection\\ReconnectionPloy",
+
+    \ZanPHP\ConnectionPool\TCP\TcpClient::class => "Zan\\Framework\\Network\\Common\\TcpClient",
+    \ZanPHP\ConnectionPool\TCP\TcpClientEx::class => "Zan\\Framework\\Network\\Common\\TcpClientEx",
+    \ZanPHP\ConnectionPool\TCP\TcpSendErrorException::class => "Zan\\Framework\\Network\\Common\\Exception\\TcpSendErrorException",
+    \ZanPHP\ConnectionPool\TCP\TcpSendTimeoutException::class => "Zan\\Framework\\Network\\Common\\Exception\\TcpSendTimeoutException",
+
 ];
