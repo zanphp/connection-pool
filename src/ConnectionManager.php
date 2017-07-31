@@ -14,8 +14,9 @@ use ZanPHP\Coroutine\Exception\ConditionException;
 use ZanPHP\Hawk\Constant;
 use ZanPHP\Support\Singleton;
 use ZanPHP\Timer\Timer;
+use ZanPHP\Contracts\ConnectionPool\ConnectionManager as ConnectionManagerContract;
 
-class ConnectionManager
+class ConnectionManager implements ConnectionManagerContract
 {
 
     use Singleton;
