@@ -15,6 +15,7 @@ use ZanPHP\Support\Arr;
 use ZanPHP\Support\Singleton;
 use ZanPHP\Timer\Timer;
 use Zan\Framework\Network\Connection\Factory\NovaClient;
+use ZanPHP\Contracts\ConnectionPool\ConnectionManager as ConnectionManagerContract;
 
 class ConnectionInitiator
 {
@@ -59,7 +60,7 @@ class ConnectionInitiator
         $connectionManager->monitorConnectionNum();
 
         $container = Container::getInstance();
-        $container->instance("connectionManager", $connectionManager);
+        $container->instance(ConnectionManagerContract::class, $connectionManager);
     }
 
     private function initConfig($config)
