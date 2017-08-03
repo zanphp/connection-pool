@@ -9,6 +9,7 @@ use ZanPHP\ConnectionPool\Exception\GetConnectionTimeoutFromPool;
 use ZanPHP\Container\Container;
 use ZanPHP\Contracts\Config\Repository;
 use ZanPHP\Contracts\ConnectionPool\Connection;
+use ZanPHP\Contracts\Hawk\Hawk;
 use ZanPHP\Coroutine\Condition;
 use ZanPHP\Coroutine\Exception\ConditionException;
 use ZanPHP\Hawk\Constant;
@@ -129,7 +130,7 @@ class ConnectionManager implements ConnectionManagerContract
     public function monitorTick()
     {
         $container = Container::getInstance();
-        $hawk = $container->make("hawk");
+        $hawk = $container->make(Hawk::class);
 
         foreach (self::$poolMap as $poolKey => $pool) {
             $activeNums = $pool->getActiveConnection()->length();
