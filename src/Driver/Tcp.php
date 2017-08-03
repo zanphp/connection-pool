@@ -4,9 +4,11 @@ namespace ZanPHP\ConnectionPool\Driver;
 
 use swoole_client as SwooleClient;
 use ZanPHP\ConnectionPool\ReconnectionPloy;
+use ZanPHP\Contracts\ConnectionPool\Base;
+use ZanPHP\Contracts\ConnectionPool\Connection;
 use ZanPHP\Timer\Timer;
 
-class Tcp extends Base
+class Tcp extends Base implements Connection
 {
     private $clientCb;
     protected $isAsync = true;

@@ -3,9 +3,11 @@
 namespace ZanPHP\ConnectionPool\Driver;
 
 use ZanPHP\ConnectionPool\ReconnectionPloy;
+use ZanPHP\Contracts\ConnectionPool\Base;
+use ZanPHP\Contracts\ConnectionPool\Connection;
 use ZanPHP\Timer\Timer;
 
-class Redis extends Base
+class Redis extends Base implements Connection
 {
     protected $isAsync = true;
 

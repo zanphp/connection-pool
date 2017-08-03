@@ -2,13 +2,15 @@
 
 namespace ZanPHP\ConnectionPool\Driver;
 
+use ZanPHP\Contracts\ConnectionPool\Base;
+use ZanPHP\Contracts\ConnectionPool\Connection;
 use ZanPHP\Database\Mysql\Mysql as Engine;
 use ZanPHP\ConnectionPool\ReconnectionPloy;
 use ZanPHP\Coroutine\Task;
 use ZanPHP\Support\Time;
 use ZanPHP\Timer\Timer;
 
-class Mysql extends Base
+class Mysql extends Base implements Connection
 {
     protected $isAsync = true;
     private $classHash = null;

@@ -5,7 +5,7 @@ namespace Zan\Framework\Network\Connection\Driver;
 use Zan\Framework\Contract\Network\Connection;
 use swoole_client as SwooleClient;
 
-class Tcp extends Base implements Connection
+class Tcp extends Baseç
 {
     public function closeSocket()
     {

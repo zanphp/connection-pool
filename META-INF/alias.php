@@ -1,7 +1,6 @@
 <?php
 
 return [
-    \ZanPHP\ConnectionPool\Driver\Base::class => "Zan\\Framework\\Network\\Connection\\Driver\\Base",
     \ZanPHP\ConnectionPool\Driver\Http::class => "Zan\\Framework\\Network\\Connection\\Driver\\Http",
     \ZanPHP\ConnectionPool\Driver\Mysql::class => "Zan\\Framework\\Network\\Connection\\Driver\\Mysql",
     \ZanPHP\ConnectionPool\Driver\Redis::class => "Zan\\Framework\\Network\\Connection\\Driver\\Redis",
