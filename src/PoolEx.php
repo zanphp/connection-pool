@@ -27,7 +27,9 @@ class PoolEx
 
     public static function support($factoryType)
     {
-        return class_exists("swoole_connpool") && in_array($factoryType, static::$engineMapEx, true);
+        // return class_exists("swoole_connpool") && in_array($factoryType, static::$engineMapEx, true);
+        // 暂时屏蔽扩展连接池实现
+        return false;
     }
 
     public function __construct($factoryType, array $config)
