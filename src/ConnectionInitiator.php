@@ -179,8 +179,8 @@ class ConnectionInitiator
 
                 // hb?
                 case 'Syslog':
-                    break;
                 case 'Tcp':
+                    $config["hasRecv"] = false;
                     break;
             }
             $connectionPool = new PoolEx($factoryType, $config);
