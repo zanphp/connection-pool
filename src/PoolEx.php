@@ -27,6 +27,7 @@ class PoolEx
 
     public static function support($factoryType)
     {
+        return false;
         if (getenv("runMode") === "online") {
             return false;
         }
