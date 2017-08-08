@@ -90,6 +90,13 @@ class ConnectionInitiator
             if (in_array($factoryType, $this->engineMap)) {
                 $factoryType = ucfirst($factoryType);
                 $cf['pool']['pool_name'] = $this->poolName;
+
+                // FIX trace 与 log 没有配置 hasRecv 的情况
+                if (strncasecmp($this->poolName, "tcp.trace", strlen("tcp.trace")) === 0
+                    || strncasecmp($this->poolName, "syslog.", strlen("syslog.")) === 0) {
+                    $cf["hasRecv"] = false;
+                }
+
                 if (isset($cf['host']) && !filter_var($cf['host'], FILTER_VALIDATE_IP) && !isset($cf["path"])) {
                     $poolName = $this->poolName;
                     $this->host2Ip($cf, $poolName, $factoryType);
@@ -179,8 +186,8 @@ class ConnectionInitiator
 
                 // hb?
                 case 'Syslog':
+                    break;
                 case 'Tcp':
-                    $config["hasRecv"] = false;
                     break;
             }
             $connectionPool = new PoolEx($factoryType, $config);
