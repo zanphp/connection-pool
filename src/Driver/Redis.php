@@ -25,7 +25,6 @@ class Redis extends Base implements Connection
     public function init() {
         //set callback
         $this->getSocket()->on('close', [$this, 'onClose']);
-        $this->getSocket()->on('message', [$this, 'onMessage']);
     }
 
     public function onClose($redis){
@@ -52,14 +51,41 @@ class Redis extends Base implements Connection
             $this->close();
             return;
         }
+
+
+        if (isset($this->config["password"])) {
+            $pwd = $this->config["password"];
+            $this->auth($redis, $pwd);
+        } else {
+            $this->connected();
+        }
+    }
+
+    private function auth(\swoole_redis $redis, $pwd, $timeout = 1000)
+    {
+        /** @noinspection PhpUndefinedMethodInspection */
+        $timerId = Timer::after($timeout, function() {
+            sys_error("redis auth timeout" . $this->getConnString());
+            $this->close();
+        });
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        $r = $redis->auth($pwd, function($redis, $result) use($timerId) {
+            Timer::clearAfterJob($timerId);
+            $this->connected();
+        });
+
+        if (!$r) {
+            sys_error("redis auth call fail" . $this->getConnString());
+            $this->close();
+        }
+    }
+
+    private function connected()
+    {
         //put conn to active_pool
         $this->release();
         ReconnectionPloy::getInstance()->connectSuccess(spl_object_hash($this));
         sys_echo("redis client connect to server " . $this->getConnString());
     }
-
-    public function onMessage($redis, $message) {
-
-    }
-
 }
