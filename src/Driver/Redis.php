@@ -72,7 +72,12 @@ class Redis extends Base implements Connection
         /** @noinspection PhpUndefinedMethodInspection */
         $r = $redis->auth($pwd, function($redis, $result) use($timerId) {
             Timer::clearAfterJob($timerId);
-            $this->connected();
+            if ($result) {
+                $this->connected();
+            } else {
+                sys_error("redis auth fail" . $this->getConnString());
+                $this->close();
+            }
         });
 
         if (!$r) {
