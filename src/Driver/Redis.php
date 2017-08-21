@@ -56,6 +56,9 @@ class Redis extends Base implements Connection
         if (isset($this->config["password"])) {
             $pwd = $this->config["password"];
             $this->auth($redis, $pwd);
+        } else if (isset($this->config["selectDB"])) {
+            $index = $this->config["selectDB"];
+            $this->selectDB($redis, $index);
         } else {
             $this->connected();
         }
@@ -73,7 +76,12 @@ class Redis extends Base implements Connection
         $r = $redis->auth($pwd, function($redis, $result) use($timerId) {
             Timer::clearAfterJob($timerId);
             if ($result) {
-                $this->connected();
+                if (isset($this->config["selectDB"])) {
+                    $index = $this->config["selectDB"];
+                    $this->selectDB($redis, $index);
+                } else {
+                    $this->connected();
+                }
             } else {
                 sys_error("redis auth fail" . $this->getConnString());
                 $this->close();
@@ -82,6 +90,31 @@ class Redis extends Base implements Connection
 
         if (!$r) {
             sys_error("redis auth call fail" . $this->getConnString());
+            $this->close();
+        }
+    }
+
+    private function selectDB(\swoole_redis $redis, $index, $timeout = 1000)
+    {
+        /** @noinspection PhpUndefinedMethodInspection */
+        $timerId = Timer::after($timeout, function() {
+            sys_error("redis select timeout" . $this->getConnString());
+            $this->close();
+        });
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        $r = $redis->select($index, function($redis, $result) use($timerId) {
+            Timer::clearAfterJob($timerId);
+            if ($result) {
+                $this->connected();
+            } else {
+                sys_error("redis select fail" . $this->getConnString());
+                $this->close();
+            }
+        });
+
+        if (!$r) {
+            sys_error("redis select call fail" . $this->getConnString());
             $this->close();
         }
     }
