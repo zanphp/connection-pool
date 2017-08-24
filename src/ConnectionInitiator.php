@@ -97,6 +97,11 @@ class ConnectionInitiator
                     $cf["hasRecv"] = false;
                 }
 
+                // Syslog超时时间设置为100ms,避免hang住请求,可配置
+                if (strncasecmp($this->poolName, "syslog.", strlen("syslog.")) === 0) {
+                    $cf["connect_timeout"] = 100;
+                }
+
                 if (isset($cf['host']) && !filter_var($cf['host'], FILTER_VALIDATE_IP) && !isset($cf["path"])) {
                     $poolName = $this->poolName;
                     $this->host2Ip($cf, $poolName, $factoryType);
