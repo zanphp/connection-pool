@@ -2,79 +2,61 @@
 
 namespace Zan\Framework\Network\Connection;
 
-use Zan\Framework\Contract\Network\ConnectionFactory;
-use Zan\Framework\Contract\Network\ConnectionPool;
-use Zan\Framework\Contract\Network\Connection;
-use Zan\Framework\Utilities\Types\ObjectArray;
+use ZanPHP\Contracts\ConnectionPool\Connection;
+use ZanPHP\Contracts\ConnectionPool\ConnectionFactory;
+use ZanPHP\Contracts\ConnectionPool\ConnectionPool;
 
 class Pool implements ConnectionPool
 {
-    public $waitNum = 0;
+    private $Pool;
 
     public function __construct(ConnectionFactory $connectionFactory, array $config, $type)
     {
-
+        $this->Pool = new \ZanPHP\ConnectionPool\Pool($connectionFactory, $config, $type);
     }
 
     public function init()
     {
-
+        $this->Pool->init();
     }
 
-    /**
-     * @param string $previousConnectionHash
-     * @param null $prevConn
-     * @return null|void
-     */
     public function createConnect($previousConnectionHash = '', $prevConn = null)
     {
-
+        $this->Pool->createConnect($previousConnectionHash, $prevConn);
     }
 
-    /**
-     * @return ObjectArray
-     */
     public function getFreeConnection()
     {
-
+        $this->Pool->getFreeConnection();
     }
 
-    /**
-     * @return ObjectArray
-     */
     public function getActiveConnection()
     {
-
+        $this->Pool->getActiveConnection();
     }
 
     public function reload(array $config)
     {
+        $this->Pool->reload($config);
     }
 
-    /**
-     * @param null $connection
-     * @return \Generator|void
-     */
     public function get($connection = null)
     {
-
+        $this->Pool->get($connection);
     }
 
     public function recycle(Connection $conn)
     {
-
+        $this->Pool->recycle($conn);
     }
 
     public function remove(Connection $conn)
     {
-
+        $this->Pool->remove($conn);
     }
 
-    /**
-     * @return array|null
-     */
     public function getPoolConfig()
     {
-
+        $this->Pool->getPoolConfig();
     }
 }

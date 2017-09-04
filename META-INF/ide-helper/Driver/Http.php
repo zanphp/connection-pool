@@ -2,8 +2,8 @@
 
 namespace Zan\Framework\Network\Connection\Driver;
 
-
-use Zan\Framework\Contract\Network\Connection;
+use ZanPHP\Contracts\ConnectionPool\Base;
+use ZanPHP\Contracts\ConnectionPool\Connection;
 
 class Http extends Base implements Connection
 {

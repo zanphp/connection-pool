@@ -2,7 +2,7 @@
 
 namespace Zan\Framework\Network\Common\Exception;
 
-use Zan\Framework\Foundation\Exception\SystemException;
+use ZanPHP\Exception\SystemException;
 
 class TcpSendTimeoutException extends SystemException
 {

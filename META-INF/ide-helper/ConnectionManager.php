@@ -2,55 +2,43 @@
 
 namespace Zan\Framework\Network\Connection;
 
-use Zan\Framework\Foundation\Exception\System\InvalidArgumentException;
-use Zan\Framework\Network\Connection\Exception\CanNotCreateConnectionException;
-use Zan\Framework\Network\Connection\Exception\ConnectTimeoutException;
-use Zan\Framework\Sdk\Monitor\Constant;
-use Zan\Framework\Utilities\DesignPattern\Singleton;
 
 class ConnectionManager
 {
+    private $ConnectionManager;
 
-    use Singleton;
-
-
-    /**
-     * @param string $connKey
-     * @return \Zan\Framework\Contract\Network\Connection
-     * @throws InvalidArgumentException | CanNotCreateConnectionException | ConnectTimeoutException
-     */
-    public function get($connKey)
+    public function __construct()
     {
-
+        $this->ConnectionManager = new \ZanPHP\ConnectionPool\ConnectionManager();
     }
 
-    /**
-     * @param $poolKey
-     * @param Pool|PoolEx $pool
-     * @throws InvalidArgumentException
-     */
+    public function get($connKey)
+    {
+        $this->ConnectionManager->get($connKey);
+    }
+
     public function addPool($poolKey, $pool)
     {
-
+        $this->ConnectionManager->addPool($poolKey, $pool);
     }
 
     public function monitor()
     {
-
+        $this->ConnectionManager->monitor();
     }
 
     public function monitorTick()
     {
-
+        $this->ConnectionManager->monitorTick();
     }
 
     public function setServer($server)
     {
-
+        $this->ConnectionManager->setServer($server);
     }
 
     public function monitorConnectionNum()
     {
-
+        $this->ConnectionManager->monitorConnectionNum();
     }
 }
