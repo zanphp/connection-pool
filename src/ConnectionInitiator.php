@@ -95,11 +95,9 @@ class ConnectionInitiator
                 if (strncasecmp($this->poolName, "tcp.trace", strlen("tcp.trace")) === 0
                     || strncasecmp($this->poolName, "syslog.", strlen("syslog.")) === 0) {
                     $cf["hasRecv"] = false;
-                }
-
-                // Syslog超时时间设置为100ms,避免hang住请求,可配置
-                if (strncasecmp($this->poolName, "syslog.", strlen("syslog.")) === 0) {
-                    $cf["connect_timeout"] = 100;
+                    // 超时时间设置为10ms,避免hang住请求,可配置
+                    $cf["connect_timeout"] = 10;
+                    $cf["get-timeout"] = 10;
                 }
 
                 if (isset($cf['host']) && !filter_var($cf['host'], FILTER_VALIDATE_IP) && !isset($cf["path"])) {
