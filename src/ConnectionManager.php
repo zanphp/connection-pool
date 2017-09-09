@@ -12,6 +12,7 @@ use ZanPHP\Contracts\ConnectionPool\Connection;
 use ZanPHP\Contracts\Hawk\Hawk;
 use ZanPHP\Coroutine\Condition;
 use ZanPHP\Coroutine\Exception\ConditionException;
+use ZanPHP\Exception\ZanException;
 use ZanPHP\Hawk\Constant;
 use ZanPHP\Support\Singleton;
 use ZanPHP\Timer\Timer;
@@ -41,9 +42,12 @@ class ConnectionManager implements ConnectionManagerContract
      * @return \Zan\Framework\Contract\Network\Connection
      * @throws InvalidArgumentException | CanNotCreateConnectionException | ConnectTimeoutException
      */
-    public function get($connKey)
+    public function get($connKey, $wait = true)
     {
         while (!isset(self::$poolMap[$connKey]) && !isset(self::$poolExMap[$connKey])) {
+            if (!$wait) {
+                throw new ZanException("Trace/Syslog can not find poolMap, ignore it");
+            }
             try {
                 yield new Condition(static::$getPoolEvent, 300);
             } catch (ConditionException $e) {
