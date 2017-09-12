@@ -14,7 +14,7 @@ use ZanPHP\DnsClient\DnsClient;
 use ZanPHP\Support\Arr;
 use ZanPHP\Support\Singleton;
 use ZanPHP\Timer\Timer;
-use Zan\Framework\Network\Connection\Factory\NovaClient;
+use ZanPHP\NovaConnectionPool\NovaClientFactory;
 use ZanPHP\Contracts\ConnectionPool\ConnectionManager as ConnectionManagerContract;
 
 class ConnectionInitiator
@@ -95,9 +95,16 @@ class ConnectionInitiator
                 if (strncasecmp($this->poolName, "tcp.trace", strlen("tcp.trace")) === 0
                     || strncasecmp($this->poolName, "syslog.", strlen("syslog.")) === 0) {
                     $cf["hasRecv"] = false;
-                    // 超时时间设置为10ms,避免hang住请求,可配置
-                    $cf["connect_timeout"] = 10;
-                    $cf["get-timeout"] = 10;
+                    if (getenv("runMode") === "test" || getenv("runMode") === "qatest" ) {
+                        // 测试环境连接远程端口，使用较大的超时时间
+                        $cf["connect_timeout"] = 100;
+                        $cf["get-timeout"] = 100;
+                    }
+                    else{
+                        // 超时时间设置为10ms,避免hang住请求,可配置
+                        $cf["connect_timeout"] = 10;
+                        $cf["get-timeout"] = 10;
+                    }
                 }
 
                 if (isset($cf['host']) && !filter_var($cf['host'], FILTER_VALIDATE_IP) && !isset($cf["path"])) {
@@ -209,7 +216,7 @@ class ConnectionInitiator
                     $factory = new Mysql($config);
                     break;
                 case 'NovaClient':
-                    $factory = new NovaClient($config);
+                    $factory = new NovaClientFactory($config);
                     break;
                 case 'Tcp':
                     $factory = new Tcp($config);
