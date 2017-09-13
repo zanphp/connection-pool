@@ -51,8 +51,8 @@ class Syslog extends Base implements Connection
 
     public function onReceive(SwooleClient $cli, $data)
     {
-        $this->release();
-        call_user_func($this->clientCb, $data);
+//        $this->release();
+//        call_user_func($this->clientCb, $data);
     }
 
     public function onError(SwooleClient $cli)
