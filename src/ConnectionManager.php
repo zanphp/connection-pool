@@ -39,8 +39,9 @@ class ConnectionManager implements ConnectionManagerContract
 
     /**
      * @param string $connKey
-     * @return \Zan\Framework\Contract\Network\Connection
-     * @throws InvalidArgumentException | CanNotCreateConnectionException | ConnectTimeoutException
+     * @param bool $wait
+     * @return \ZanPHP\Contracts\ConnectionPool\Connection
+     * @throws ZanException | InvalidArgumentException | CanNotCreateConnectionException | ConnectTimeoutException
      */
     public function get($connKey, $wait = true)
     {
