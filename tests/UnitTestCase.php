@@ -5,7 +5,7 @@
  * Date: 2017/9/26
  * Time: 下午3:05
  */
-namespace ZanPHP\Database\Tests;
+namespace ZanPHP\ConnectionPool\Tests;
 
 use ZanPHP\Testing\UnitTest;
 
