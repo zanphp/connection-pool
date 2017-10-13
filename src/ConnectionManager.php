@@ -76,11 +76,7 @@ class ConnectionManager implements ConnectionManagerContract
 
         $connection = (yield $pool->get());
 
-        if ($connection instanceof Connection) {
-            yield $connection;
-        } else {
-            yield new FutureConnection($this, $connKey, $conf["connect_timeout"], $pool);
-        }
+        yield $connection;
     }
 
     private function getFromPoolEx($connKey)

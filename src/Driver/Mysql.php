@@ -94,11 +94,14 @@ class Mysql extends Base implements Connection
 
     public function ping()
     {
-        $connection = (yield $this->pool->get($this));
-        if (null == $connection) {
+        $connRemoved = $this->pool->getFreeConnection()->remove($this);
+        if ($connRemoved === false) {
             $this->heartbeatLater();
             return;
         }
+
+        $this->pool->getActiveConnection()->push($this);
+
         $this->setUnReleased();
         $engine = new Engine($this);
 
@@ -106,9 +109,11 @@ class Mysql extends Base implements Connection
             yield $engine->query('select 1');
         } catch (\Throwable $t) {
             echo_exception($t);
+            $this->closeSocket();
             return;
         } catch (\Exception $e){
             echo_exception($e);
+            $this->closeSocket();
             return;
         }
 
