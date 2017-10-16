@@ -132,8 +132,7 @@ class Pool implements ConnectionPool
         if (null != $connection) {
             $this->activeConnection->push($connection);
         } else {
-            yield new FutureConnection(ConnectionManager::getInstance(),
-                $this->poolConfig['pool']['pool_name'], $this->poolConfig["connect_timeout"], $this);
+            yield new FutureConnection($this->poolConfig['pool']['pool_name'], $this->poolConfig["connect_timeout"], $this);
             return;
         }
 
