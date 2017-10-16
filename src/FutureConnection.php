@@ -14,15 +14,13 @@ class FutureConnection implements Async
     private $connKey = '';
     private $timeout = 0;
     private $taskCallback = null;
-    private $connectionManager = null;
     private $pool;
     
-    public function __construct($connectionManager, $connKey, $timeout, $pool)
+    public function __construct($connKey, $timeout, $pool)
     {
         if(!is_int($timeout)){
             throw new InvalidArgumentException('Invalid timeout for Future[Connection]');
         }
-        $this->connectionManager = $connectionManager;
         $this->connKey = $connKey;
         $this->timeout = $timeout;
         $this->pool = $pool;
@@ -61,7 +59,7 @@ class FutureConnection implements Async
                 $this->pool->waitNum--;
             }
 
-            $conn = (yield $this->connectionManager->get($this->connKey));
+            $conn = (yield $this->pool->get());
             call_user_func($this->taskCallback, $conn);
             unset($this->taskCallback);
 
