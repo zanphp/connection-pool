@@ -42,7 +42,7 @@ class MonitorConnectionNum {
             for ($i=0; $i<$freeNum-$minConnectionNum; $i++) {
                 $conn = $pool->getFreeConnection()->pop();
                 if ($conn->lastUsedTime == 0 || (Time::current(true) - $conn->lastUsedTime) > $timeInterval/1000) {
-                    $conn->closeSocket();
+                    $conn->close();
                 } else {
                     $pool->getFreeConnection()->push($conn);
                 }
