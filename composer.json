@@ -15,10 +15,12 @@
     "zanphp/dns-client": "dev-master",
     "zanphp/database": "dev-master",
     "zanphp/timer": "dev-master",
-    "zanphp/support": "dev-master",
+    "zanphp/support": "dev-master"
+  },
+  "require-dev": {
+    "zanphp/testing":"dev-master",
     "zanphp/spi": "dev-master",
-    "zanphp/config": "dev-master",
-    "zanphp/testing":"dev-master"
+    "zanphp/config": "dev-master"
   },
   "autoload": {
     "psr-4": {
