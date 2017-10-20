@@ -53,4 +53,8 @@ class Syslog implements ConnectionFactory
 
     }
 
+    public function getFactoryType()
+    {
+        return "Syslog";
+    }
 }

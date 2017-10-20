@@ -63,4 +63,9 @@ class Mysql implements ConnectionFactory
     {
         $this->conn->close();
     }
+
+    public function getFactoryType()
+    {
+        return "Mysqli";
+    }
 }

@@ -61,4 +61,8 @@ class Tcp implements ConnectionFactory
 
     }
 
+    public function getFactoryType()
+    {
+        return "Tcp";
+    }
 }

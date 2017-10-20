@@ -28,4 +28,9 @@ class Mysql implements ConnectionFactory
     {
         $this->Mysql->close();
     }
+
+    public function getFactoryType()
+    {
+        return $this->Mysql->getFactoryType();
+    }
 }

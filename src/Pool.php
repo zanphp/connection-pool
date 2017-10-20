@@ -29,11 +29,11 @@ class Pool implements ConnectionPool
 
     public $waitNum = 0;
 
-    public function __construct(ConnectionFactory $connectionFactory, array $config, $type)
+    public function __construct(ConnectionFactory $connectionFactory, array $config)
     {
         $this->poolConfig = $config;
         $this->factory = $connectionFactory;
-        $this->type = $type;
+        $this->type = $connectionFactory->getFactoryType();
         $this->init();
     }
 

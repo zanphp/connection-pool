@@ -28,4 +28,9 @@ class Http implements ConnectionFactory
     {
         $this->Http->heart();
     }
+
+    public function getFactoryType()
+    {
+        return $this->Http->getFactoryType();
+    }
 }

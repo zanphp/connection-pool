@@ -29,4 +29,8 @@ class Tcp implements ConnectionFactory
         $this->Tcp->close();
     }
 
+    public function getFactoryType()
+    {
+        return $this->Tcp->getFactoryType();
+    }
 }

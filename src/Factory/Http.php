@@ -30,4 +30,9 @@ class Http implements ConnectionFactory
     {
 
     }
+
+    public function getFactoryType()
+    {
+        return "Http";
+    }
 }

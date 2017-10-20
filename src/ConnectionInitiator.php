@@ -224,7 +224,7 @@ class ConnectionInitiator
                 default:
                     throw new \RuntimeException("not support connection type: $factoryType");
             }
-            $connectionPool = new Pool($factory, $config, $factoryType);
+            $connectionPool = new Pool($factory, $config);
         }
 
         ConnectionManager::getInstance()->addPool($config['pool']['pool_name'], $connectionPool);

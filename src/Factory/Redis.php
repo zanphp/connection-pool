@@ -61,4 +61,8 @@ class Redis implements ConnectionFactory
     {
     }
 
+    public function getFactoryType()
+    {
+        return "Redis";
+    }
 }
